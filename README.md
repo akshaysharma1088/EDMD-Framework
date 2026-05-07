@@ -262,8 +262,4 @@ All tables reproducible with `--seed 42`.
 
 ---
 
-## 📄 License
-
-MIT License. See [LICENSE](LICENSE) for details.
-
 > **Data Privacy Notice:** This repository contains only synthetic data and code. No real customer records or financial institution data are included.
