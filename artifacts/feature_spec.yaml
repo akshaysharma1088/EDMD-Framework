@@ -1,0 +1,207 @@
+# EDMD Framework — Feature Specification
+# ========================================
+# Defines all 47 features across 4 behavioral families.
+# All features computed on event-time windows to satisfy
+# EDMD Property 1 (zero training-serving skew).
+
+version: "1.0.0"
+decision_horizon_days: 365
+label_horizon_months: 12
+default_definition: "60+ days past due or charge-off"
+
+feature_families:
+
+  utilization_dynamics:
+    description: "Rolling utilization metrics capturing spend trajectory"
+    event_class: TransactionEvent
+    lateness_bound: "15 minutes"
+    features:
+      util_mean_3m:
+        description: "Mean utilization over 3-month event-time window"
+        window_days: 90
+        type: float
+        range: [0.0, 1.0]
+      util_mean_6m:
+        description: "Mean utilization over 6-month event-time window"
+        window_days: 180
+        type: float
+        range: [0.0, 1.0]
+      util_mean_12m:
+        description: "Mean utilization over 12-month event-time window"
+        window_days: 365
+        type: float
+        range: [0.0, 1.0]
+      util_slope_6m:
+        description: "OLS utilization trend slope over 6 months (normalized by limit)"
+        window_days: 180
+        type: float
+      util_volatility:
+        description: "Standard deviation of monthly utilization over 6 months"
+        window_days: 180
+        type: float
+        range: [0.0, null]
+      mcc_entropy_6m:
+        description: "Shannon entropy of spend across merchant category codes"
+        window_days: 180
+        type: float
+        range: [0.0, null]
+      reversal_rate_6m:
+        description: "Fraction of transactions that are reversals"
+        window_days: 180
+        type: float
+        range: [0.0, 1.0]
+
+  payment_stability:
+    description: "Repayment discipline features capturing payment behavior"
+    event_class: PaymentEvent
+    lateness_bound: "72 hours"
+    features:
+      ptr_mean_6m:
+        description: "Mean Payment-to-Balance ratio over 6 months (clipped at 2.0)"
+        window_days: 180
+        type: float
+        range: [0.0, 2.0]
+      ptr_mean_3m:
+        description: "Mean Payment-to-Balance ratio over 3 months"
+        window_days: 90
+        type: float
+        range: [0.0, 2.0]
+      full_to_min_ratio:
+        description: "Ratio of full payments to minimum-only payments"
+        window_days: 180
+        type: float
+        range: [0.0, null]
+      consecutive_ontime_payments:
+        description: "Count of consecutive on-time payments from most recent"
+        window_days: 180
+        type: int
+        range: [0, null]
+      payment_timing_dev_days:
+        description: "Standard deviation of payment timing relative to due date"
+        window_days: 180
+        type: float
+      payment_count_6m:
+        description: "Total number of payment events in 6 months"
+        window_days: 180
+        type: int
+        range: [0, null]
+      mean_payment_amount_6m:
+        description: "Mean payment amount over 6 months"
+        window_days: 180
+        type: float
+      late_payment_count_3m:
+        description: "Count of late payments (after due date) in 3 months"
+        window_days: 90
+        type: int
+        range: [0, null]
+      payment_volatility_3m:
+        description: "Standard deviation of payment amounts over 3 months"
+        window_days: 90
+        type: float
+      autopay_flag:
+        description: "Binary flag: account uses autopay"
+        window_days: 180
+        type: int
+        range: [0, 1]
+      payment_count_6m:
+        description: "Number of payment events in 6 months"
+        window_days: 180
+        type: int
+
+  risk_drift_indicators:
+    description: "Bureau-based risk drift signals with 30-day propagation adjustment"
+    event_class: BureauRefreshEvent
+    lateness_bound: "30 days"
+    bureau_lag_adjustment_days: 30
+    features:
+      credit_score_latest:
+        description: "Most recent credit score from bureau refresh"
+        type: int
+        range: [300, 850]
+      score_delta_3m:
+        description: "Credit score change over 3 months"
+        type: float
+      score_delta_6m:
+        description: "Credit score change over 6 months"
+        type: float
+      inquiry_count_90d:
+        description: "Number of bureau inquiries in past 90 days"
+        type: int
+        range: [0, null]
+      external_utilization:
+        description: "External tradeline utilization from bureau"
+        type: float
+        range: [0.0, 1.0]
+      derogatory_marks:
+        description: "Count of derogatory marks on bureau report"
+        type: int
+        range: [0, null]
+      score_trend_direction:
+        description: "Direction of score trend: +1 improving, 0 stable, -1 deteriorating"
+        type: int
+        range: [-1, 1]
+      delinquency_spike_flag:
+        description: "Binary: score_delta_3m < -25 OR inquiry_count_90d >= 4"
+        type: int
+        range: [0, 1]
+
+  behavioral_stability:
+    description: "Spend pattern stability and behavioral regularity features"
+    event_class: TransactionEvent
+    lateness_bound: "15 minutes"
+    features:
+      spend_cv_6m:
+        description: "Coefficient of variation of transaction amounts over 6 months"
+        window_days: 180
+        type: float
+        range: [0.0, null]
+      channel_entropy_6m:
+        description: "Shannon entropy of spend across channels (online/in-store/mobile)"
+        window_days: 180
+        type: float
+      online_spend_fraction:
+        description: "Fraction of total spend via online channel"
+        window_days: 180
+        type: float
+        range: [0.0, 1.0]
+      monthly_spend_cv:
+        description: "Coefficient of variation of monthly spend totals"
+        window_days: 180
+        type: float
+      transaction_count_6m:
+        description: "Total transaction count over 6 months"
+        window_days: 180
+        type: int
+        range: [0, null]
+      avg_transaction_amount_6m:
+        description: "Mean transaction amount over 6 months"
+        window_days: 180
+        type: float
+      max_single_transaction_6m:
+        description: "Maximum single transaction amount over 6 months"
+        window_days: 180
+        type: float
+      revolver_consistency:
+        description: "Binary: account active (has transactions) in 4+ of last 6 months"
+        window_days: 180
+        type: int
+        range: [0, 1]
+      account_changes_6m:
+        description: "Count of AccountChangeEvents (limit/product changes) in 6 months"
+        window_days: 180
+        type: int
+        range: [0, null]
+
+governance:
+  platinum_tier_metadata:
+    - feature_snapshot_hash
+    - source_event_hashes
+    - pipeline_version
+    - computation_timestamp
+    - domain_provenance
+    - psi_score
+    - model_contract_valid
+    - regulatory_hold
+  sr_11_7_alignment: true
+  bcbs_239_alignment: true
+  point_in_time_correct: true
