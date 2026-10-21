@@ -1,17 +1,16 @@
 # EDMD-Framework
 ### A Unified Event-Driven Medallion Architecture with Domain-Driven Design for Real-Time Credit Risk Feature Engineering
 
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
-[![IEEE TBD](https://img.shields.io/badge/Submitted-IEEE%20Transactions%20on%20Big%20Data-blue.svg)](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=6687317)
+[![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## 📄 Paper
 
-> **EDMD: A Unified Event-Driven Medallion Architecture with Domain-Driven Design for Real-Time Credit Risk Feature Engineering**
+> **An event-driven medallion architecture with domain-driven design for training-serving consistent credit risk feature engineering**
 > Akshay Sharma
-> *Submitted to IEEE Transactions on Big Data, May 2026*
+> *Manuscript under review*
 > Contact: akshay.sharma1088@gmail.com
 
 This repository provides the complete reproducibility package for the above manuscript.
@@ -34,17 +33,21 @@ Production ML systems in regulated financial services face four engineering chal
 - **D**omain-Driven Design bounded contexts + anti-corruption layers
 - Extended four-tier **M**edallion architecture with novel Platinum tier
 
-### Key Results (10M events/day synthetic benchmark)
+### Key Results (simulation benchmark, 50,000 accounts, 5 seeds, 10% late events)
 
-| Architecture | TSS | LERR (@10% late) | DBVR | FFL p99 |
-|-------------|-----|------------------|------|---------|
-| **EDMD (proposed)** | **0.000*** | **99.7%** | **0.000*** | 4.6 min |
-| Feature Store | 0.012 | 84.1% | N/A | 2.9 min |
-| Kappa | 0.041 | 78.6% | N/A | 4.1 min |
-| Pure Medallion | 0.067 | 52.4% | N/A | 6.8 min |
-| Lambda | 0.083 | 61.3% | N/A | 8.3 min |
+| Architecture | TSS | SERR | LERR | AUC |
+|-------------|-----|------|------|-----|
+| **EDMD** | **0.000** | 0.057 | **1.000** | **0.856 ± 0.006** |
+| Feature store | 0.057 | 0.057 | 1.000 | 0.853 ± 0.006 |
+| Kappa (72 h allowed lateness) | 0.009 | 0.169 | 0.500 | 0.853 ± 0.005 |
+| Three-tier Medallion | 0.032 | 0.182 | 0.599 | 0.853 ± 0.006 |
+| Lambda | 0.064 | 0.064 | 1.000 | 0.853 ± 0.006 |
+| Oracle (complete features) | n/a | 0 | n/a | 0.857 ± 0.007 |
 
-*\* = guaranteed by construction (EDMD Properties 1 and 2)*
+TSS: training-serving skew. SERR: serving error against complete features. Both are normalized by feature standard deviation. LERR: late-event recovery, macro-averaged over event classes.
+EDMD's zero skew follows from training on as-served Platinum values (Property 1). The benchmark models each architecture by its event-inclusion rules and does not run streaming engines, so latency is not measured. See `src/evaluation/simulation_benchmark.py` for every rule and metric.
+
+> **Note on earlier versions.** Earlier versions of this repository shipped `src/evaluation/benchmark.py`, which reported preset parameter values with added noise rather than measured results. It has been removed. All results now come from `simulation_benchmark.py`.
 
 ---
 
@@ -62,7 +65,8 @@ EDMD-Framework/
 │   │   └── threshold_calibration.py  # Algorithm 1: risk-constrained threshold
 │   │
 │   ├── evaluation/
-│   │   └── benchmark.py              # Tables 7, 8, 10 reproduction
+│   │   ├── simulation_benchmark.py   # Tables 5 and 7 (measured)
+│   │   └── plot_figure4.py           # Figure 4
 │   │
 │   ├── monitoring/
 │   │   └── drift_monitor.py          # PSI-based population drift monitor
@@ -111,12 +115,12 @@ Transaction Domain   ──ACL──►          ↑
 
 ### Watermark Strategy
 
-| Event Class | Lateness Bound δ_c | LERR |
-|-------------|-------------------|------|
-| TransactionEvent | 15 minutes | 99.9% |
-| PaymentEvent | 72 hours | 99.8% |
-| BureauRefreshEvent | 30 days | 99.7% |
-| AccountChangeEvent | 24 hours | 99.9% |
+| Event Class | Lateness Bound δ_c |
+|-------------|-------------------|
+| TransactionEvent | 15 minutes |
+| PaymentEvent | 72 hours |
+| BureauRefreshEvent | 30 days |
+| AccountChangeEvent | 24 hours |
 
 ---
 
@@ -177,10 +181,8 @@ python src/data/feature_engineering.py \
     --output_path artifacts/feature_store.parquet \
     --decision_date 2024-04-01
 
-# 3. Run benchmark (reproduces Tables 7, 8, 10)
-python src/evaluation/benchmark.py \
-    --output_path artifacts/benchmark_results.json \
-    --seed 42
+# 3. Run the simulation benchmark (reproduces Tables 5 and 7)
+python src/evaluation/simulation_benchmark.py --output_dir artifacts/simulation
 
 # 4. Run PSI drift monitor
 python src/monitoring/drift_monitor.py \
@@ -201,19 +203,14 @@ docker run -v $(pwd)/artifacts:/app/artifacts edmd-framework
 ## 📊 Reproducing Paper Results
 
 ```bash
-# Table 7 — Main benchmark (10% late injection)
-python src/evaluation/benchmark.py --seed 42
-
-# Table 8 — LERR sensitivity analysis
-python src/evaluation/benchmark.py --seed 42
-# (Table 8 is included in default benchmark output)
-
-# Table 10 — TSS impact on CLI model AUC
-python src/evaluation/benchmark.py --seed 42
-# (Table 10 is included in default benchmark output)
+pip install -r requirements.txt
+# Tables 5 and 7 (about 5 minutes on 2 CPUs)
+python src/evaluation/simulation_benchmark.py --output_dir artifacts/simulation
+# Figure 4
+python src/evaluation/plot_figure4.py artifacts/simulation/main_runs.json artifacts/simulation/figure4.png
 ```
 
-All tables reproducible with `--seed 42`.
+Outputs: `main_runs.json` (per-seed results), `summary.csv`, `late_rate_sensitivity.csv`, `kappa_sensitivity.json`.
 
 ---
 
@@ -235,14 +232,13 @@ All tables reproducible with `--seed 42`.
 ## 📜 Citation
 
 ```bibtex
-@article{sharma2026edmd,
-  title   = {EDMD: A Unified Event-Driven Medallion Architecture with
-             Domain-Driven Design for Real-Time Credit Risk Feature Engineering},
-  author  = {Sharma, Akshay},
-  journal = {IEEE Transactions on Big Data},
-  year    = {2026},
-  note    = {Submitted for review},
-  url     = {https://github.com/akshaysharma1088/EDMD-Framework}
+@misc{sharma2026edmd,
+  title  = {An event-driven medallion architecture with domain-driven design for
+            training-serving consistent credit risk feature engineering},
+  author = {Sharma, Akshay},
+  year   = {2026},
+  note   = {Manuscript under review},
+  url    = {https://github.com/akshaysharma1088/EDMD-Framework}
 }
 ```
 

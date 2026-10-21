@@ -1,7 +1,7 @@
-numpy==1.26.4
-pandas==2.2.1
-scipy==1.13.0
-scikit-learn==1.4.2
-pyarrow==15.0.2
-matplotlib==3.8.4
-seaborn==0.13.2
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+scikit-learn==1.9.1
+xgboost==3.4.1
+pyarrow==26.0.0
+matplotlib==3.11.2

@@ -1,0 +1,845 @@
+{
+  "config": {
+    "platinum_latency": 0.0034722222222222225,
+    "kappa_allowed_lateness": 3.0,
+    "medallion_lookback_days": 3,
+    "fs_materialize_every": 0.010416666666666668
+  },
+  "runs": [
+    {
+      "seed": 42,
+      "n_accounts": 50000,
+      "late_rate": 0.1,
+      "default_rate": 0.04784,
+      "n_events": {
+        "txn": 3095531,
+        "pay": 145008,
+        "bur": 150000,
+        "acc": 53854
+      },
+      "oracle_auc": 0.8650915131039498,
+      "arch": {
+        "EDMD": {
+          "tss": 0.0,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0,
+            "txn_amount_30d": 0.0,
+            "txn_amount_7d": 0.0,
+            "utilization_30d": 0.0,
+            "pay_ratio_90d": 0.0,
+            "late_pay_count_90d": 0.0,
+            "bureau_score_latest": 0.0,
+            "bureau_score_delta_90d": 0.0,
+            "limit_latest": 0.0,
+            "limit_decrease_90d": 0.0
+          },
+          "serve_error": 0.05611746768908714,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8614438834090445,
+          "correction_rate_by_feature": {
+            "txn_count_30d": 0.01318,
+            "txn_amount_30d": 0.01318,
+            "txn_amount_7d": 0.01318,
+            "utilization_30d": 0.0133,
+            "pay_ratio_90d": 0.084,
+            "late_pay_count_90d": 0.04416,
+            "bureau_score_latest": 0.41208,
+            "bureau_score_delta_90d": 0.41258,
+            "limit_latest": 0.00012,
+            "limit_decrease_90d": 2e-05
+          },
+          "correction_rate": 0.10057999999999997
+        },
+        "Feature store": {
+          "tss": 0.05637568724081358,
+          "tss_by_feature": {
+            "txn_count_30d": 0.001434714719750517,
+            "txn_amount_30d": 0.00045865435358174853,
+            "txn_amount_7d": 0.0017830273569950453,
+            "utilization_30d": 0.0007423962808720137,
+            "pay_ratio_90d": 0.0242484509617433,
+            "late_pay_count_90d": 0.0727235747989071,
+            "bureau_score_latest": 0.14769828942267857,
+            "bureau_score_delta_90d": 0.3144914174255307,
+            "limit_latest": 4.966750337224835e-05,
+            "limit_decrease_90d": 0.00012667958470463173
+          },
+          "serve_error": 0.05637568724081358,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8609839188377322
+        },
+        "Kappa": {
+          "tss": 0.009180611334251463,
+          "tss_by_feature": {
+            "txn_count_30d": 0.00032096779896394965,
+            "txn_amount_30d": 9.399408008254016e-05,
+            "txn_amount_7d": 0.0003654037400364084,
+            "utilization_30d": 0.00019425821125222136,
+            "pay_ratio_90d": 0.02162301112346099,
+            "late_pay_count_90d": 0.06175758203013286,
+            "bureau_score_latest": 0.004373864704384758,
+            "bureau_score_delta_90d": 0.002900684566124032,
+            "limit_latest": 4.966750337224835e-05,
+            "limit_decrease_90d": 0.00012667958470463173
+          },
+          "serve_error": 0.16872806023342218,
+          "lerr": 0.4993438320209974,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.0,
+            "bur": 0.0,
+            "acc": 0.9973753280839895
+          },
+          "auc": 0.860631806211148
+        },
+        "Three-tier Medallion": {
+          "tss": 0.0320216951595787,
+          "tss_by_feature": {
+            "txn_count_30d": 0.062257545542502075,
+            "txn_amount_30d": 0.019259630052683017,
+            "txn_amount_7d": 0.0841541748760954,
+            "utilization_30d": 0.030486011890799736,
+            "pay_ratio_90d": 0.030160412236660328,
+            "late_pay_count_90d": 0.0800123484356373,
+            "bureau_score_latest": 0.007524475531716998,
+            "bureau_score_delta_90d": 0.005136151002533914,
+            "limit_latest": 0.0002127653495211839,
+            "limit_decrease_90d": 0.0010134366776370538
+          },
+          "serve_error": 0.1811659360148682,
+          "lerr": 0.6009191814082553,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.40367672563302115,
+            "bur": 0.0,
+            "acc": 1.0
+          },
+          "auc": 0.8609933850807232
+        },
+        "Lambda": {
+          "tss": 0.06335629938951583,
+          "tss_by_feature": {
+            "txn_count_30d": 0.00032096779896394965,
+            "txn_amount_30d": 9.399408008254016e-05,
+            "txn_amount_7d": 0.07429362301344568,
+            "utilization_30d": 0.00019425821125222136,
+            "pay_ratio_90d": 0.02415488216518872,
+            "late_pay_count_90d": 0.07249374860315436,
+            "bureau_score_latest": 0.14758490945932984,
+            "bureau_score_delta_90d": 0.3142502634756641,
+            "limit_latest": 4.966750337224835e-05,
+            "limit_decrease_90d": 0.00012667958470463173
+          },
+          "serve_error": 0.06335629938951583,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8606390595661672
+        }
+      },
+      "auc_diff_ci": {
+        "Feature store": [
+          -0.0021659854066749,
+          0.003107681086446796
+        ],
+        "Kappa": [
+          -0.002046701168954915,
+          0.0035836248343669415
+        ],
+        "Three-tier Medallion": [
+          -0.002807282665022745,
+          0.003925910001993268
+        ],
+        "Lambda": [
+          -0.0018673159981013542,
+          0.0036061162194961013
+        ]
+      },
+      "runtime_s": 29.8
+    },
+    {
+      "seed": 43,
+      "n_accounts": 50000,
+      "late_rate": 0.1,
+      "default_rate": 0.0472,
+      "n_events": {
+        "txn": 3094274,
+        "pay": 145088,
+        "bur": 150000,
+        "acc": 53789
+      },
+      "oracle_auc": 0.8541248274488039,
+      "arch": {
+        "EDMD": {
+          "tss": 0.0,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0,
+            "txn_amount_30d": 0.0,
+            "txn_amount_7d": 0.0,
+            "utilization_30d": 0.0,
+            "pay_ratio_90d": 0.0,
+            "late_pay_count_90d": 0.0,
+            "bureau_score_latest": 0.0,
+            "bureau_score_delta_90d": 0.0,
+            "limit_latest": 0.0,
+            "limit_decrease_90d": 0.0
+          },
+          "serve_error": 0.05705820933914461,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8551202521737894,
+          "correction_rate_by_feature": {
+            "txn_count_30d": 0.0125,
+            "txn_amount_30d": 0.0125,
+            "txn_amount_7d": 0.0125,
+            "utilization_30d": 0.01264,
+            "pay_ratio_90d": 0.08416,
+            "late_pay_count_90d": 0.04474,
+            "bureau_score_latest": 0.41388,
+            "bureau_score_delta_90d": 0.41454,
+            "limit_latest": 0.00016,
+            "limit_decrease_90d": 4e-05
+          },
+          "correction_rate": 0.100766
+        },
+        "Feature store": {
+          "tss": 0.057286478890069145,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0014051039375781967,
+            "txn_amount_30d": 0.0004527369833422089,
+            "txn_amount_7d": 0.0017528744531404132,
+            "utilization_30d": 0.0007575975420966353,
+            "pay_ratio_90d": 0.024877967623791134,
+            "late_pay_count_90d": 0.07431574591438292,
+            "bureau_score_latest": 0.15029739238589462,
+            "bureau_score_delta_90d": 0.31871325949367735,
+            "limit_latest": 3.8267736601466174e-05,
+            "limit_decrease_90d": 0.00025384283018657893
+          },
+          "serve_error": 0.057286478890069145,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8536337147248431
+        },
+        "Kappa": {
+          "tss": 0.009391314969792649,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003478433200519315,
+            "txn_amount_30d": 0.00011398961173727838,
+            "txn_amount_7d": 0.0004413367709936797,
+            "utilization_30d": 0.00022443923732805133,
+            "pay_ratio_90d": 0.02155392263277313,
+            "late_pay_count_90d": 0.06375613590510061,
+            "bureau_score_latest": 0.004737218185485271,
+            "bureau_score_delta_90d": 0.0025798291823274978,
+            "limit_latest": 3.151343703573601e-05,
+            "limit_decrease_90d": 0.00012692141509328947
+          },
+          "serve_error": 0.16950965715426622,
+          "lerr": 0.5,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.0,
+            "bur": 0.0,
+            "acc": 1.0
+          },
+          "auc": 0.8524413859596693
+        },
+        "Three-tier Medallion": {
+          "tss": 0.03272678733622149,
+          "tss_by_feature": {
+            "txn_count_30d": 0.06325942694865488,
+            "txn_amount_30d": 0.01981385583053082,
+            "txn_amount_7d": 0.0863018708037992,
+            "utilization_30d": 0.03127103739682835,
+            "pay_ratio_90d": 0.030361157520139737,
+            "late_pay_count_90d": 0.08148831120370673,
+            "bureau_score_latest": 0.007891787459080674,
+            "bureau_score_delta_90d": 0.0049793536377139526,
+            "limit_latest": 0.00025109416554772857,
+            "limit_decrease_90d": 0.0016499783962127628
+          },
+          "serve_error": 0.1827127987230359,
+          "lerr": 0.5984144056623413,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.39365762264936505,
+            "bur": 0.0,
+            "acc": 1.0
+          },
+          "auc": 0.8516263217065848
+        },
+        "Lambda": {
+          "tss": 0.06442852523069335,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003478433200519315,
+            "txn_amount_30d": 0.00011398961173727838,
+            "txn_amount_7d": 0.07559086983560596,
+            "utilization_30d": 0.00022443923732805133,
+            "pay_ratio_90d": 0.024821263502966602,
+            "late_pay_count_90d": 0.07418292063124728,
+            "bureau_score_latest": 0.15024441633858568,
+            "bureau_score_delta_90d": 0.31860107497728174,
+            "limit_latest": 3.151343703573601e-05,
+            "limit_decrease_90d": 0.00012692141509328947
+          },
+          "serve_error": 0.06442852523069335,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.853538242325919
+        }
+      },
+      "auc_diff_ci": {
+        "Feature store": [
+          -0.0011323389963793838,
+          0.003913753549743187
+        ],
+        "Kappa": [
+          -0.0009913581953574083,
+          0.0062882019483148244
+        ],
+        "Three-tier Medallion": [
+          -0.000900256410915351,
+          0.007401352620065964
+        ],
+        "Lambda": [
+          -0.0014704146295025891,
+          0.004373441836746943
+        ]
+      },
+      "runtime_s": 30.3
+    },
+    {
+      "seed": 44,
+      "n_accounts": 50000,
+      "late_rate": 0.1,
+      "default_rate": 0.04812,
+      "n_events": {
+        "txn": 3096540,
+        "pay": 144992,
+        "bur": 150000,
+        "acc": 53849
+      },
+      "oracle_auc": 0.8628646373728243,
+      "arch": {
+        "EDMD": {
+          "tss": 0.0,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0,
+            "txn_amount_30d": 0.0,
+            "txn_amount_7d": 0.0,
+            "utilization_30d": 0.0,
+            "pay_ratio_90d": 0.0,
+            "late_pay_count_90d": 0.0,
+            "bureau_score_latest": 0.0,
+            "bureau_score_delta_90d": 0.0,
+            "limit_latest": 0.0,
+            "limit_decrease_90d": 0.0
+          },
+          "serve_error": 0.056433175961321067,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8613981078735695,
+          "correction_rate_by_feature": {
+            "txn_count_30d": 0.01356,
+            "txn_amount_30d": 0.01356,
+            "txn_amount_7d": 0.01356,
+            "utilization_30d": 0.0138,
+            "pay_ratio_90d": 0.0842,
+            "late_pay_count_90d": 0.04342,
+            "bureau_score_latest": 0.41476,
+            "bureau_score_delta_90d": 0.41524,
+            "limit_latest": 0.00024,
+            "limit_decrease_90d": 6e-05
+          },
+          "correction_rate": 0.10124000000000002
+        },
+        "Feature store": {
+          "tss": 0.05667533622760097,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0014024243620958557,
+            "txn_amount_30d": 0.0004466900750322079,
+            "txn_amount_7d": 0.0017014623728131377,
+            "utilization_30d": 0.000805187966293748,
+            "pay_ratio_90d": 0.02394910223561062,
+            "late_pay_count_90d": 0.07211792547165471,
+            "bureau_score_latest": 0.14929247735592022,
+            "bureau_score_delta_90d": 0.3165797200394679,
+            "limit_latest": 7.673184965348469e-05,
+            "limit_decrease_90d": 0.00038164054746793555
+          },
+          "serve_error": 0.05667533622760097,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8571025616332046
+        },
+        "Kappa": {
+          "tss": 0.009019074357805348,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003712632693845364,
+            "txn_amount_30d": 0.00011375128277171448,
+            "txn_amount_7d": 0.0004332836978330987,
+            "utilization_30d": 0.0003049855409809945,
+            "pay_ratio_90d": 0.02060625688090192,
+            "late_pay_count_90d": 0.06154549062539651,
+            "bureau_score_latest": 0.003890166576896997,
+            "bureau_score_delta_90d": 0.002467173306766287,
+            "limit_latest": 7.673184965348469e-05,
+            "limit_decrease_90d": 0.00038164054746793555
+          },
+          "serve_error": 0.16894542701118015,
+          "lerr": 0.4993131868131868,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.0,
+            "bur": 0.0,
+            "acc": 0.9972527472527473
+          },
+          "auc": 0.8552010352457861
+        },
+        "Three-tier Medallion": {
+          "tss": 0.03171004471346744,
+          "tss_by_feature": {
+            "txn_count_30d": 0.061862874161409925,
+            "txn_amount_30d": 0.019336542531668485,
+            "txn_amount_7d": 0.08384225811873293,
+            "utilization_30d": 0.03069492621980651,
+            "pay_ratio_90d": 0.029112929080087318,
+            "late_pay_count_90d": 0.07844812940781558,
+            "bureau_score_latest": 0.007282659511700472,
+            "bureau_score_delta_90d": 0.004868622409902023,
+            "limit_latest": 0.00025215701950202725,
+            "limit_decrease_90d": 0.001399348674049097
+          },
+          "serve_error": 0.1814188653836119,
+          "lerr": 0.597856847045831,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.3914273881833241,
+            "bur": 0.0,
+            "acc": 1.0
+          },
+          "auc": 0.8559443164860329
+        },
+        "Lambda": {
+          "tss": 0.0636057843764357,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003712632693845364,
+            "txn_amount_30d": 0.00011375128277171448,
+            "txn_amount_7d": 0.0735719165129547,
+            "utilization_30d": 0.0003049855409809945,
+            "pay_ratio_90d": 0.02371832007385275,
+            "late_pay_count_90d": 0.07185278603977363,
+            "bureau_score_latest": 0.14922649166861637,
+            "bureau_score_delta_90d": 0.31643995697890087,
+            "limit_latest": 7.673184965348469e-05,
+            "limit_decrease_90d": 0.00038164054746793555
+          },
+          "serve_error": 0.0636057843764357,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8570522608607837
+        }
+      },
+      "auc_diff_ci": {
+        "Feature store": [
+          0.0012158471562555286,
+          0.007088037103230199
+        ],
+        "Kappa": [
+          0.0030077001158251293,
+          0.009347579488539735
+        ],
+        "Three-tier Medallion": [
+          0.0019520937227573505,
+          0.009086494141722174
+        ],
+        "Lambda": [
+          0.0014729286637531205,
+          0.007405841009678878
+        ]
+      },
+      "runtime_s": 29.4
+    },
+    {
+      "seed": 45,
+      "n_accounts": 50000,
+      "late_rate": 0.1,
+      "default_rate": 0.0479,
+      "n_events": {
+        "txn": 3097384,
+        "pay": 145041,
+        "bur": 150000,
+        "acc": 53698
+      },
+      "oracle_auc": 0.8504856566394512,
+      "arch": {
+        "EDMD": {
+          "tss": 0.0,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0,
+            "txn_amount_30d": 0.0,
+            "txn_amount_7d": 0.0,
+            "utilization_30d": 0.0,
+            "pay_ratio_90d": 0.0,
+            "late_pay_count_90d": 0.0,
+            "bureau_score_latest": 0.0,
+            "bureau_score_delta_90d": 0.0,
+            "limit_latest": 0.0,
+            "limit_decrease_90d": 0.0
+          },
+          "serve_error": 0.056355281238480645,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8509181338698689,
+          "correction_rate_by_feature": {
+            "txn_count_30d": 0.01344,
+            "txn_amount_30d": 0.01344,
+            "txn_amount_7d": 0.01344,
+            "utilization_30d": 0.01368,
+            "pay_ratio_90d": 0.08326,
+            "late_pay_count_90d": 0.04388,
+            "bureau_score_latest": 0.41242,
+            "bureau_score_delta_90d": 0.41314,
+            "limit_latest": 0.00024,
+            "limit_decrease_90d": 6e-05
+          },
+          "correction_rate": 0.10070000000000001
+        },
+        "Feature store": {
+          "tss": 0.05660184277762413,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0014298611677448635,
+            "txn_amount_30d": 0.0004534734164807527,
+            "txn_amount_7d": 0.0017408918677316932,
+            "utilization_30d": 0.0008267408797351713,
+            "pay_ratio_90d": 0.024468936028658708,
+            "late_pay_count_90d": 0.07244324239051891,
+            "bureau_score_latest": 0.14887205824827757,
+            "bureau_score_delta_90d": 0.31529657385289367,
+            "limit_latest": 0.00010397905373753293,
+            "limit_decrease_90d": 0.00038267087046245726
+          },
+          "serve_error": 0.05660184277762413,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8482923391771765
+        },
+        "Kappa": {
+          "tss": 0.009192278058148276,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003534997498703625,
+            "txn_amount_30d": 0.00010711464599887606,
+            "txn_amount_7d": 0.0004112148791026589,
+            "utilization_30d": 0.00030154977785375794,
+            "pay_ratio_90d": 0.02160286657722586,
+            "late_pay_count_90d": 0.061906043497352535,
+            "bureau_score_latest": 0.004223931113464523,
+            "bureau_score_delta_90d": 0.002529910416414214,
+            "limit_latest": 0.00010397905373753293,
+            "limit_decrease_90d": 0.00038267087046245726
+          },
+          "serve_error": 0.1689404989820701,
+          "lerr": 0.49875311720698257,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.0,
+            "bur": 0.0,
+            "acc": 0.9950124688279302
+          },
+          "auc": 0.8488103860185428
+        },
+        "Three-tier Medallion": {
+          "tss": 0.03197911842902469,
+          "tss_by_feature": {
+            "txn_count_30d": 0.06250034199390642,
+            "txn_amount_30d": 0.019519717187749308,
+            "txn_amount_7d": 0.08417754971162893,
+            "utilization_30d": 0.030972159490776766,
+            "pay_ratio_90d": 0.029937929972211504,
+            "late_pay_count_90d": 0.07883141921950104,
+            "bureau_score_latest": 0.007432795120852283,
+            "bureau_score_delta_90d": 0.004780769239525732,
+            "limit_latest": 0.00023537582906598314,
+            "limit_decrease_90d": 0.00140312652502901
+          },
+          "serve_error": 0.18167407752775633,
+          "lerr": 0.5976945134568961,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.39576558499965403,
+            "bur": 0.0,
+            "acc": 0.9950124688279302
+          },
+          "auc": 0.8490477364803873
+        },
+        "Lambda": {
+          "tss": 0.06349485197994431,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003534997498703625,
+            "txn_amount_30d": 0.00010711464599887606,
+            "txn_amount_7d": 0.0732886019241248,
+            "utilization_30d": 0.00030154977785375794,
+            "pay_ratio_90d": 0.02437939331543795,
+            "late_pay_count_90d": 0.0721468836716486,
+            "bureau_score_latest": 0.1487809472275062,
+            "bureau_score_delta_90d": 0.31510387956280256,
+            "limit_latest": 0.00010397905373753293,
+            "limit_decrease_90d": 0.00038267087046245726
+          },
+          "serve_error": 0.06349485197994431,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8482071202613548
+        }
+      },
+      "auc_diff_ci": {
+        "Feature store": [
+          0.00013700335654285868,
+          0.00536300537633456
+        ],
+        "Kappa": [
+          -0.0014736419001265154,
+          0.005298589025856628
+        ],
+        "Three-tier Medallion": [
+          -0.001360368172835541,
+          0.005479082174094796
+        ],
+        "Lambda": [
+          3.906018919573876e-05,
+          0.005712978219987524
+        ]
+      },
+      "runtime_s": 31.1
+    },
+    {
+      "seed": 46,
+      "n_accounts": 50000,
+      "late_rate": 0.1,
+      "default_rate": 0.04802,
+      "n_events": {
+        "txn": 3093798,
+        "pay": 145057,
+        "bur": 150000,
+        "acc": 53761
+      },
+      "oracle_auc": 0.8508726235847203,
+      "arch": {
+        "EDMD": {
+          "tss": 0.0,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0,
+            "txn_amount_30d": 0.0,
+            "txn_amount_7d": 0.0,
+            "utilization_30d": 0.0,
+            "pay_ratio_90d": 0.0,
+            "late_pay_count_90d": 0.0,
+            "bureau_score_latest": 0.0,
+            "bureau_score_delta_90d": 0.0,
+            "limit_latest": 0.0,
+            "limit_decrease_90d": 0.0
+          },
+          "serve_error": 0.05730157887098845,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8500916414214117,
+          "correction_rate_by_feature": {
+            "txn_count_30d": 0.01386,
+            "txn_amount_30d": 0.01386,
+            "txn_amount_7d": 0.01386,
+            "utilization_30d": 0.01406,
+            "pay_ratio_90d": 0.08274,
+            "late_pay_count_90d": 0.0434,
+            "bureau_score_latest": 0.41614,
+            "bureau_score_delta_90d": 0.4167,
+            "limit_latest": 0.0002,
+            "limit_decrease_90d": 4e-05
+          },
+          "correction_rate": 0.101486
+        },
+        "Feature store": {
+          "tss": 0.05752052405914924,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0014311300099405712,
+            "txn_amount_30d": 0.00044973268929091395,
+            "txn_amount_7d": 0.0017330700846978075,
+            "utilization_30d": 0.000773162957152996,
+            "pay_ratio_90d": 0.023740538810357086,
+            "late_pay_count_90d": 0.07194962091328894,
+            "bureau_score_latest": 0.15252420613388654,
+            "bureau_score_delta_90d": 0.3223012058009337,
+            "limit_latest": 4.6965102959518e-05,
+            "limit_decrease_90d": 0.0002556080889842828
+          },
+          "serve_error": 0.05752052405914924,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8459543514569827
+        },
+        "Kappa": {
+          "tss": 0.008967087288326809,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003574960473190218,
+            "txn_amount_30d": 0.00011466541587940806,
+            "txn_amount_7d": 0.0004418695966338551,
+            "utilization_30d": 0.00026036607169300884,
+            "pay_ratio_90d": 0.021051762935842492,
+            "late_pay_count_90d": 0.0602061195688211,
+            "bureau_score_latest": 0.004432265835289885,
+            "bureau_score_delta_90d": 0.002503754219845516,
+            "limit_latest": 4.6965102959518e-05,
+            "limit_decrease_90d": 0.0002556080889842828
+          },
+          "serve_error": 0.16923551252376176,
+          "lerr": 0.5,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.0,
+            "bur": 0.0,
+            "acc": 1.0
+          },
+          "auc": 0.8481249553268406
+        },
+        "Three-tier Medallion": {
+          "tss": 0.03219147095139728,
+          "tss_by_feature": {
+            "txn_count_30d": 0.06242316398042625,
+            "txn_amount_30d": 0.019727517307502548,
+            "txn_amount_7d": 0.08725940812312845,
+            "utilization_30d": 0.030903812823087,
+            "pay_ratio_90d": 0.02951620751628952,
+            "late_pay_count_90d": 0.07813563429755792,
+            "bureau_score_latest": 0.00758070361758056,
+            "bureau_score_delta_90d": 0.004487095025992219,
+            "limit_latest": 0.00021971424401047562,
+            "limit_decrease_90d": 0.0016614525783978375
+          },
+          "serve_error": 0.18229962229039992,
+          "lerr": 0.5989626413013509,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 0.3958505652054039,
+            "bur": 0.0,
+            "acc": 1.0
+          },
+          "auc": 0.8463890914888459
+        },
+        "Lambda": {
+          "tss": 0.06475027086922601,
+          "tss_by_feature": {
+            "txn_count_30d": 0.0003574960473190218,
+            "txn_amount_30d": 0.00011466541587940806,
+            "txn_amount_7d": 0.07644237993994925,
+            "utilization_30d": 0.00026036607169300884,
+            "pay_ratio_90d": 0.02363710357790231,
+            "late_pay_count_90d": 0.07171805891494733,
+            "bureau_score_latest": 0.1524742720078637,
+            "bureau_score_delta_90d": 0.3221957935247622,
+            "limit_latest": 4.6965102959518e-05,
+            "limit_decrease_90d": 0.0002556080889842828
+          },
+          "serve_error": 0.06475027086922601,
+          "lerr": 1.0,
+          "lerr_by_class": {
+            "txn": 1.0,
+            "pay": 1.0,
+            "bur": 1.0,
+            "acc": 1.0
+          },
+          "auc": 0.8466004788437889
+        }
+      },
+      "auc_diff_ci": {
+        "Feature store": [
+          0.0004955298479027621,
+          0.007523440114418507
+        ],
+        "Kappa": [
+          -0.0007908745476974371,
+          0.00498818041828793
+        ],
+        "Three-tier Medallion": [
+          0.0004645559612867445,
+          0.007120932792526016
+        ],
+        "Lambda": [
+          -0.00022621620463732505,
+          0.006712123530213185
+        ]
+      },
+      "runtime_s": 29.6
+    }
+  ]
+}
