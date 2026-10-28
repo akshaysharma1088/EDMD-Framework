@@ -104,7 +104,7 @@ Python 3.11 or later. Exact versions are pinned in `requirements.txt`:
 
 | Architecture | TSS | SERR | LERR | AUC |
 |---|---|---|---|---|
-| EDMD | 0.000 | 0.057 | 1.000 | 0.856 ± 0.005 |
+| EDMD | 0.000 | 0.057 | 1.000 | 0.856 ± 0.006 |
 | Feature store | 0.057 | 0.057 | 1.000 | 0.853 ± 0.006 |
 | Kappa (72 h allowed lateness) | 0.009 | 0.169 | 0.500 | 0.853 ± 0.005 |
 | Three-tier medallion | 0.032 | 0.182 | 0.599 | 0.853 ± 0.006 |
